@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CBCCD1"
+    tools:context=".MainActivity"
+    tools:ignore="MissingClass">
+
+    <LinearLayout
+        android:id="@+id/artboardLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#4E75C3"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:text="Artboard"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/canvasToolsLayout"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:layout_marginRight="1dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#4E75C2"
+            android:contentDescription="draw"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/pencil_icon" />
+
+        <ImageButton
+            android:id="@+id/imageButton14"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#4E75C2"
+            android:contentDescription="erase"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/eraser_icon" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#4E75C1"
+            android:contentDescription="delete"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/delete_icon" />
+
+    </LinearLayout>
+
+    <com.kyanogen.signatureview.SignatureView
+        android:id="@+id/signature_view"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:backgroundColor="#ffffff"
+        app:enableSignature="true"
+        app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
+        app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
+        app:penColor="#000000"
+        app:penSize="5dp" />
+
+    <LinearLayout
+        android:id="@+id/textEditorLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="#4E75C2"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textEditor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Text Editor"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/textEditor"
+        android:layout_width="0dp"
+        android:layout_height="312dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
+        app:layout_constraintEnd_toStartOf="@+id/textEditorToolsLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/textEditorToolsLayout"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="1dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEditorLayout">
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4E75C1"
+            android:contentDescription="copy"
+            android:minHeight="48dp"
+            app:srcCompat="?attr/actionModeCopyDrawable" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4E75C1"
+            android:contentDescription="cut"
+            android:minHeight="48dp"
+            app:srcCompat="?attr/actionModeCutDrawable" />
+
+        <ImageButton
+            android:id="@+id/imageButton11"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#4E75C1"
+            android:contentDescription="paste"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/paste_outline_icon" />
+
+        <ImageButton
+            android:id="@+id/imageButton13"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#4E75C0"
+            android:contentDescription="delete"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/backspace_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/symbolicLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#4E75C1"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:text="Symbolic"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
