@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/drawButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#4E75C2"
@@ -49,7 +49,7 @@
             app:srcCompat="@drawable/pencil_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton14"
+            android:id="@+id/eraseButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#4E75C2"
@@ -58,11 +58,11 @@
             app:srcCompat="@drawable/eraser_icon" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/clearButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#4E75C1"
-            android:contentDescription="delete"
+            android:contentDescription="clear"
             android:tint="#FFFFFF"
             app:srcCompat="@drawable/delete_icon" />
 
@@ -138,6 +138,7 @@
             android:background="#4E75C1"
             android:contentDescription="copy"
             android:minHeight="48dp"
+            android:tint="#FFFFFF"
             app:srcCompat="?attr/actionModeCopyDrawable" />
 
         <ImageButton
@@ -147,6 +148,7 @@
             android:background="#4E75C1"
             android:contentDescription="cut"
             android:minHeight="48dp"
+            android:tint="#FFFFFF"
             app:srcCompat="?attr/actionModeCutDrawable" />
 
         <ImageButton
