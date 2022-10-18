@@ -7,12 +7,15 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.kyanogen.signatureview.SignatureView;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     public ImageButton buttonDraw;
@@ -25,12 +28,16 @@ public class MainActivity extends AppCompatActivity {
 
     public ImageButton buttonCompile;
 
+    public Bitmap bitmapSymbol;
+
+    private EnglishDigitClassifier mClassifier;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SignatureView signatureView = (SignatureView)findViewById(R.id.signature_view);
+        SignatureView signatureView = (SignatureView) findViewById(R.id.signature_view);
         float initPenSize = signatureView.getPenSize();
 
         buttonDraw = findViewById(R.id.drawButton);
@@ -44,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         textEditor = findViewById(R.id.textEditor);
 
         buttonCompile = findViewById(R.id.compileButton);
+
+        init();
 
         buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +87,40 @@ public class MainActivity extends AppCompatActivity {
         });
         buttonTextClear.setOnClickListener(e -> clearTextEditor());
 
-        buttonCompile.setOnClickListener(e -> {
-            Bitmap bitmap = signatureView.getSignatureBitmap();
-            System.out.println("bitmap_dim = " + bitmap.getHeight() + " " + bitmap.getWidth());
-            System.out.println((bitmap));
+        // ISN'T WORKING
+        buttonCompile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap bitmap = signatureView.getSignatureBitmap();
+                bitmapSymbol = getResizedBitmap(bitmap, 28, 28);
+                EnglishDigitResult result = mClassifier.classify(bitmapSymbol);
+                System.out.println("Final Answer = " + result.getNumber());
+            }
         });
     }
 
     public void clearTextEditor() {
         textEditor.setText("");
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
+
+    private void init() {
+
+        try {
+            mClassifier = new EnglishDigitClassifier(this);
+        } catch (IOException e) {
+
+        }
     }
 }
