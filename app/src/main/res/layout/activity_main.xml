@@ -32,7 +32,7 @@
     <LinearLayout
         android:id="@+id/canvasToolsLayout"
         android:layout_width="40dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
         android:layout_marginRight="1dp"
         android:layout_marginBottom="89dp"
@@ -91,12 +91,12 @@
         android:id="@+id/textEditorLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:background="#4E75C2"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/textEditor"
+        app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
 
         <TextView
             android:id="@+id/textView"
@@ -112,22 +112,23 @@
     <EditText
         android:id="@+id/textEditor"
         android:layout_width="0dp"
-        android:layout_height="312dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="#FFFFFF"
+        android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rect_circular_interface"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
         app:layout_constraintEnd_toStartOf="@+id/textEditorToolsLayout"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/compileButton" />
 
     <LinearLayout
         android:id="@+id/textEditorToolsLayout"
         android:layout_width="40dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginRight="1dp"
         android:layout_marginBottom="96dp"
@@ -174,9 +175,9 @@
         android:background="@drawable/circular_image_button"
         android:padding="10dp"
         android:tint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textEditorToolsLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
+        app:layout_constraintTop_toBottomOf="@+id/canvasToolsLayout"
         app:srcCompat="@drawable/customizable_icon" />
 
     <LinearLayout

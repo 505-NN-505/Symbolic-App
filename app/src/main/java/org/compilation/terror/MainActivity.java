@@ -7,12 +7,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.kyanogen.signatureview.SignatureView;
 
@@ -24,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton buttonCut;
     public ImageButton buttonTextClear;
     public EditText textEditor;
+
+    public ImageButton buttonCompile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         buttonTextClear = findViewById(R.id.clearTextButton);
 
         textEditor = findViewById(R.id.textEditor);
+
+        buttonCompile = findViewById(R.id.compileButton);
 
         buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
             clearTextEditor();
         });
         buttonTextClear.setOnClickListener(e -> clearTextEditor());
+
+        buttonCompile.setOnClickListener(e -> {
+            Bitmap bitmap = signatureView.getSignatureBitmap();
+            System.out.println("bitmap_dim = " + bitmap.getHeight() + " " + bitmap.getWidth());
+            System.out.println((bitmap));
+        });
     }
 
     public void clearTextEditor() {
