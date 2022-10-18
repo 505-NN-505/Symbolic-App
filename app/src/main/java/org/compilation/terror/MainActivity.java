@@ -2,12 +2,17 @@ package org.compilation.terror;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.kyanogen.signatureview.SignatureView;
 
@@ -15,7 +20,10 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton buttonDraw;
     public ImageButton buttonErase;
     public ImageButton buttonClear;
-
+    public ImageButton buttonCopy;
+    public ImageButton buttonCut;
+    public ImageButton buttonTextClear;
+    public EditText textEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +33,15 @@ public class MainActivity extends AppCompatActivity {
         SignatureView signatureView = (SignatureView)findViewById(R.id.signature_view);
         float initPenSize = signatureView.getPenSize();
 
-
         buttonDraw = findViewById(R.id.drawButton);
         buttonErase = findViewById(R.id.eraseButton);
         buttonClear = findViewById(R.id.clearButton);
+
+        buttonCopy = findViewById(R.id.copyButton);
+        buttonCut = findViewById(R.id.cutButton);
+        buttonTextClear = findViewById(R.id.clearTextButton);
+
+        textEditor = findViewById(R.id.textEditor);
 
         buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,5 +63,21 @@ public class MainActivity extends AppCompatActivity {
                 signatureView.clearCanvas();
             }
         });
+        buttonCopy.setOnClickListener(e -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData data = ClipData.newPlainText("symbols", textEditor.getText());
+            clipboard.setPrimaryClip(data);
+        });
+        buttonCut.setOnClickListener(e -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData data = ClipData.newPlainText("symbols", textEditor.getText());
+            clipboard.setPrimaryClip(data);
+            clearTextEditor();
+        });
+        buttonTextClear.setOnClickListener(e -> clearTextEditor());
+    }
+
+    public void clearTextEditor() {
+        textEditor.setText("");
     }
 }
