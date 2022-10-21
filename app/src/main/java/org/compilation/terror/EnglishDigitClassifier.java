@@ -35,10 +35,13 @@ public class EnglishDigitClassifier {
     private float[][] mResult = new float[1][NUM_CLASSES];
 
     public EnglishDigitClassifier(Activity activity) throws IOException {
+
         mInterpreter = new Interpreter(loadModelFile1(activity), options);
+        System.out.println("sdf");
         mImageData = ByteBuffer.allocateDirect(
                 4 * BATCH_SIZE * IMG_HEIGHT * IMG_WIDTH * NUM_CHANNEL);
         mImageData.order(ByteOrder.nativeOrder());
+        System.out.println("sdf");
     }
 
     public EnglishDigitResult classify(Bitmap bitmap) {
