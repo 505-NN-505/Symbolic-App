@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         });
         buttonTextClear.setOnClickListener(e -> clearTextEditor());
 
-        // ISN'T WORKING
         buttonCompile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

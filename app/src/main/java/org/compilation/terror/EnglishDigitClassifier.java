@@ -37,7 +37,6 @@ public class EnglishDigitClassifier {
     public EnglishDigitClassifier(Activity activity) throws IOException {
 
         mInterpreter = new Interpreter(loadModelFile1(activity), options);
-        System.out.println("sdf");
         mImageData = ByteBuffer.allocateDirect(
                 4 * BATCH_SIZE * IMG_HEIGHT * IMG_WIDTH * NUM_CHANNEL);
         mImageData.order(ByteOrder.nativeOrder());
@@ -45,7 +44,6 @@ public class EnglishDigitClassifier {
     }
 
     public EnglishDigitResult classify(Bitmap bitmap) {
-        System.out.println("bitmap = " + bitmap.getWidth() + " " + bitmap.getHeight());
         convertBitmapToByteBuffer(bitmap);
         mInterpreter.run(mImageData, mResult);
         Log.v(LOG_TAG, "classify(): result = " + Arrays.toString(mResult[0]));
@@ -74,7 +72,6 @@ public class EnglishDigitClassifier {
         for (int i = 0; i < IMG_WIDTH; ++i) {
             for (int j = 0; j < IMG_HEIGHT; ++j) {
                 int value = mImagePixels[pixel++];
-                //mImageData.putFloat(convertPixelWhite(value));
                 total = total + convertPixelWhite(value);
             }
         }
