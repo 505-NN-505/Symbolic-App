@@ -1,5 +1,7 @@
 package org.compilation.terror;
 
+import java.util.Arrays;
+
 public class EnglishAlphabetResult {
 
     private int mNumber;
@@ -21,6 +23,7 @@ public class EnglishAlphabetResult {
                 maxIdx = i;
             }
         }
+        System.out.println("probs = " + Arrays.toString(probs));
         return maxIdx;
     }
 

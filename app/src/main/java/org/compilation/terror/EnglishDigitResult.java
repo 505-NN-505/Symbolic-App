@@ -1,6 +1,8 @@
 package org.compilation.terror;
 
 
+import java.util.Arrays;
+
 public class EnglishDigitResult {
 
     private int mNumber;
@@ -22,6 +24,7 @@ public class EnglishDigitResult {
                 maxIdx = i;
             }
         }
+        System.out.println("probs = " + Arrays.toString(probs));
         return maxIdx;
     }
 }

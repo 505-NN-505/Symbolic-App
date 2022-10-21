@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     public Bitmap bitmapSymbol;
 
-    private EnglishDigitClassifier mClassifier;
+    private EnglishAlphabetClassifier mClassifier;
+    private EnglishDigitClassifier dClassifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Bitmap bitmap = signatureView.getSignatureBitmap();
                 bitmapSymbol = getResizedBitmap(bitmap, 28, 28);
-                EnglishDigitResult result = mClassifier.classify(bitmapSymbol);
-                System.out.println("Final Answer = " + result.getNumber());
+                EnglishDigitResult resultD = dClassifier.classify(bitmapSymbol);
+                EnglishAlphabetResult resultA = mClassifier.classify(bitmapSymbol);
+                System.out.println("Final Answer = " + resultD.getNumber());
+                System.out.println("Final Answer = " + (char)(resultA.getNumber() + 'A'));
             }
         });
     }
@@ -117,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
 
         try {
-            mClassifier = new EnglishDigitClassifier(this);
+            mClassifier = new EnglishAlphabetClassifier(this);
+            dClassifier = new EnglishDigitClassifier(this);
         } catch (IOException e) {
 
         }
