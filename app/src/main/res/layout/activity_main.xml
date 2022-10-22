@@ -72,8 +72,8 @@
 
     <com.kyanogen.signatureview.SignatureView
         android:id="@+id/signature_view"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
+        android:layout_width="83dp"
+        android:layout_height="101dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"

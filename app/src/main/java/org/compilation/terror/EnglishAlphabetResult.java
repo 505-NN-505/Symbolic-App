@@ -5,29 +5,27 @@ import java.util.Arrays;
 public class EnglishAlphabetResult {
 
     private int mNumber;
+    private static float maxProb;
 
     public EnglishAlphabetResult(float[] probs) {
+        maxProb = 0.0f;
         mNumber = argmax(probs);
     }
 
     public int getNumber() {
         return mNumber;
     }
+    public float getMaxProb() { return maxProb; }
 
     private static int argmax(float[] probs) {
         int maxIdx = -1;
-        float maxProb = 0.0f;
-        System.out.println(probs.length);
+        maxProb = 0.0f;
         for (int i = 0; i < probs.length; i++) {
             if (probs[i] > maxProb) {
                 maxProb = probs[i];
                 maxIdx = i;
             }
         }
-        System.out.println(maxIdx + " " + maxProb);
-        System.out.println(probs['e' - 'a']);
-        System.out.println("probs = " + Arrays.toString(probs));
         return maxIdx;
     }
-
 }

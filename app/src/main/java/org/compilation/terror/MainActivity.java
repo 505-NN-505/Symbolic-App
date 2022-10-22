@@ -24,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton buttonCopy;
     public ImageButton buttonCut;
     public ImageButton buttonTextClear;
+
     public EditText textEditor;
 
     public ImageButton buttonCompile;
 
+    SignatureView signatureView;
     public Bitmap bitmapSymbol;
 
     private EnglishAlphabetClassifier cClassifier;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SignatureView signatureView = (SignatureView) findViewById(R.id.signature_view);
+        signatureView = (SignatureView) findViewById(R.id.signature_view);
         float initPenSize = signatureView.getPenSize();
 
         buttonDraw = findViewById(R.id.drawButton);
@@ -92,20 +94,51 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bitmap = signatureView.getSignatureBitmap();
-                bitmapSymbol = getResizedBitmap(bitmap, 40, 40);
-//                EnglishDigitResult resultD = dClassifier.classify(bitmapSymbol);
-//                EnglishAlphabetResult resultA = cClassifier.classify(bitmapSymbol);
-                EnglishAlphabetResult resultS = sClassifier.classify(bitmapSymbol);
-//                System.out.println("Final Answer Digit = " + resultD.getNumber());
-//                System.out.println("Final Answer Captial = " + (char)(resultA.getNumber() + 'A'));
-                System.out.println("Final Answer Small = " + (char)(resultS.getNumber() + 'a'));
+                detectDigit();
+                detectCapitalAlphabet();
+                detectSmallAlphabet();
             }
         });
     }
 
+    public void detectDigit() {
+        Bitmap bitmap = signatureView.getSignatureBitmap();
+        bitmapSymbol = getResizedBitmap(bitmap, 28, 28);
+        EnglishDigitResult resultD = dClassifier.classify(bitmapSymbol);
+        char digit = (char)(resultD.getNumber() + '0');
+        System.out.println("Final Answer Digit = " + digit);
+        System.out.println(resultD.getMaxProb());
+        System.out.println();
+        placeText(digit);
+    }
+    public void detectCapitalAlphabet() {
+        Bitmap bitmap = signatureView.getSignatureBitmap();
+        bitmapSymbol = getResizedBitmap(bitmap, 28, 28);
+        EnglishAlphabetResult resultA = cClassifier.classify(bitmapSymbol);
+        char letter = (char)(resultA.getNumber() + 'A');
+        System.out.println("Final Answer Captial = " + letter);
+        System.out.println(resultA.getMaxProb());
+        System.out.println();
+        placeText(letter);
+    }
+    public void detectSmallAlphabet() {
+        Bitmap bitmap = signatureView.getSignatureBitmap();
+        bitmapSymbol = getResizedBitmap(bitmap, 40, 40);
+        EnglishAlphabetResult resultS = sClassifier.classify(bitmapSymbol);
+        char letter = (char)(resultS.getNumber() + 'a');
+        System.out.println("Final Answer Small = " + letter);
+        System.out.println(resultS.getMaxProb());
+        placeText(letter);
+    }
+
     public void clearTextEditor() {
         textEditor.setText("");
+    }
+
+    public void placeText(char text) {
+        String s = textEditor.getText().toString();
+        s += text;
+        textEditor.setText(s);
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
@@ -121,11 +154,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-
         try {
-//            cClassifier = new EnglishAlphabetClassifier(this);
+            cClassifier = new EnglishAlphabetClassifier(this);
             sClassifier = new EnglishAlphabetSmallClassifier(this);
-//            dClassifier = new EnglishDigitClassifier(this);
+            dClassifier = new EnglishDigitClassifier(this);
         } catch (IOException e) {
 
         }
