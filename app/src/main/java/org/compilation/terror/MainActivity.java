@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     public Bitmap bitmapSymbol;
 
-    private EnglishAlphabetClassifier mClassifier;
+    private EnglishAlphabetClassifier cClassifier;
     private EnglishDigitClassifier dClassifier;
+    private EnglishAlphabetSmallClassifier sClassifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +93,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bitmap bitmap = signatureView.getSignatureBitmap();
-                bitmapSymbol = getResizedBitmap(bitmap, 28, 28);
-                EnglishDigitResult resultD = dClassifier.classify(bitmapSymbol);
-                EnglishAlphabetResult resultA = mClassifier.classify(bitmapSymbol);
-                System.out.println("Final Answer = " + resultD.getNumber());
-                System.out.println("Final Answer = " + (char)(resultA.getNumber() + 'A'));
+                bitmapSymbol = getResizedBitmap(bitmap, 40, 40);
+//                EnglishDigitResult resultD = dClassifier.classify(bitmapSymbol);
+//                EnglishAlphabetResult resultA = cClassifier.classify(bitmapSymbol);
+                EnglishAlphabetResult resultS = sClassifier.classify(bitmapSymbol);
+//                System.out.println("Final Answer Digit = " + resultD.getNumber());
+//                System.out.println("Final Answer Captial = " + (char)(resultA.getNumber() + 'A'));
+                System.out.println("Final Answer Small = " + (char)(resultS.getNumber() + 'a'));
             }
         });
     }
@@ -120,8 +123,9 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
 
         try {
-            mClassifier = new EnglishAlphabetClassifier(this);
-            dClassifier = new EnglishDigitClassifier(this);
+//            cClassifier = new EnglishAlphabetClassifier(this);
+            sClassifier = new EnglishAlphabetSmallClassifier(this);
+//            dClassifier = new EnglishDigitClassifier(this);
         } catch (IOException e) {
 
         }
