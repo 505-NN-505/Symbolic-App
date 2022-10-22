@@ -150,9 +150,15 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                detectDigit();
-                detectCapitalAlphabet();
-                detectSmallAlphabet();
+                if (drawType == 1) {
+                    detectDigit();
+                }
+                if (drawType == 2) {
+                    detectCapitalAlphabet();
+                }
+                if (drawType == 3) {
+                    detectSmallAlphabet();
+                }
             }
         });
     }
