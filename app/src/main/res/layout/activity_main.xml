@@ -30,6 +30,50 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
+
+        <ImageButton
+            android:id="@+id/digitButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            app:srcCompat="@drawable/number_one_icon"
+            app:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/capitalButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/a_alphabet_icon" />
+
+        <ImageButton
+            android:id="@+id/smallerButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/smaller_a_icon" />
+
+        <ImageButton
+            android:id="@+id/symbolButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/sigma_sum_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/canvasToolsLayout"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -74,7 +118,6 @@
         android:id="@+id/signature_view"
         android:layout_width="83dp"
         android:layout_height="101dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
@@ -82,7 +125,7 @@
         app:enableSignature="true"
         app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
         app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
         app:penColor="#000000"
         app:penSize="5dp" />

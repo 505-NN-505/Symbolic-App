@@ -18,6 +18,13 @@ import com.kyanogen.signatureview.SignatureView;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    int drawType = 1;
+
+    public ImageButton buttonDigit;
+    public ImageButton buttonCapital;
+    public ImageButton buttonSmaller;
+    public ImageButton buttonSymbol;
+
     public ImageButton buttonDraw;
     public ImageButton buttonErase;
     public ImageButton buttonClear;
@@ -44,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
         signatureView = (SignatureView) findViewById(R.id.signature_view);
         float initPenSize = signatureView.getPenSize();
 
+        buttonDigit = findViewById(R.id.digitButton);
+        buttonCapital = findViewById(R.id.capitalButton);
+        buttonSmaller = findViewById(R.id.smallerButton);
+        buttonSymbol = findViewById(R.id.symbolButton);
+
+        drawType = 1;
+        buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+
         buttonDraw = findViewById(R.id.drawButton);
         buttonErase = findViewById(R.id.eraseButton);
         buttonClear = findViewById(R.id.clearButton);
@@ -57,6 +72,47 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile = findViewById(R.id.compileButton);
 
         init();
+
+        buttonDigit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawType = 1;
+                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+            }
+        });
+        buttonCapital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawType = 2;
+                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+            }
+        });
+        buttonSmaller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawType = 3;
+                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+            }
+        });
+        buttonSymbol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawType = 4;
+                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+            }
+        });
 
         buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
