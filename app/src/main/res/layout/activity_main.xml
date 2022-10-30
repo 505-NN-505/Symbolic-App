@@ -30,6 +30,46 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/signature_view"
+        app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
+        app:layout_constraintVertical_bias="0.387">
+
+        <ImageButton
+            android:id="@+id/fastMode"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rect_circular_button"
+            app:srcCompat="@drawable/flash_thunder_icon"
+            app:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/superscriptButton"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/superscript_icon" />
+
+        <ImageButton
+            android:id="@+id/subscriptButton"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/subscript_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="40dp"
         android:layout_height="wrap_content"

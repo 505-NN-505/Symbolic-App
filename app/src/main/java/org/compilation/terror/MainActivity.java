@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     private EnglishDigitClassifier dClassifier;
     private EnglishAlphabetSmallClassifier sClassifier;
 
+    boolean fastWritingMode;
+    public ImageButton buttonFastMode;
+    public ImageButton buttonSuperscrpt;
+    public ImageButton buttonSubscript;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +63,13 @@ public class MainActivity extends AppCompatActivity {
         buttonSymbol = findViewById(R.id.symbolButton);
 
         drawType = 1;
-        buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+        toggleSetButtonColor(buttonDigit);
 
         buttonDraw = findViewById(R.id.drawButton);
         buttonErase = findViewById(R.id.eraseButton);
         buttonClear = findViewById(R.id.clearButton);
+        
+        toggleSetButtonColor(buttonDraw);
 
         buttonCopy = findViewById(R.id.copyButton);
         buttonCut = findViewById(R.id.cutButton);
@@ -72,53 +80,61 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile = findViewById(R.id.compileButton);
 
         init();
+        fastWritingMode = false;
+        buttonFastMode = findViewById(R.id.fastMode);
+        buttonSuperscrpt = findViewById(R.id.superscriptButton);
+        buttonSubscript = findViewById(R.id.subscriptButton);
 
         buttonDigit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawType = 1;
-                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
-                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                toggleSetButtonColor(buttonDigit);
+                toggleResetButtonColor(buttonCapital);
+                toggleResetButtonColor(buttonSmaller);
+                toggleResetButtonColor(buttonSymbol);
             }
         });
         buttonCapital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawType = 2;
-                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
-                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                toggleSetButtonColor(buttonCapital);
+                toggleResetButtonColor(buttonDigit);
+                toggleResetButtonColor(buttonSmaller);
+                toggleResetButtonColor(buttonSymbol);
             }
         });
         buttonSmaller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawType = 3;
-                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
-                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                toggleSetButtonColor(buttonSmaller);
+                toggleResetButtonColor(buttonDigit);
+                toggleResetButtonColor(buttonCapital);
+                toggleResetButtonColor(buttonSymbol);
             }
         });
         buttonSymbol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawType = 4;
-                buttonSymbol.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
-                buttonDigit.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonCapital.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
-                buttonSmaller.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+                toggleSetButtonColor(buttonSymbol);
+                toggleResetButtonColor(buttonDigit);
+                toggleResetButtonColor(buttonCapital);
+                toggleResetButtonColor(buttonSmaller);
             }
         });
 
         buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signatureView.setPenSize(50.f);
-                signatureView.setPenColor(Color.WHITE);
+                if (!fastWritingMode) {
+                    signatureView.setPenSize(50.f);
+                    signatureView.setPenColor(Color.WHITE);
+                    toggleSetButtonColor(buttonErase);
+                    toggleResetButtonColor(buttonDraw);
+                }
             }
         });
         buttonDraw.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 signatureView.setPenColor(Color.BLACK);
                 signatureView.setPenSize(initPenSize);
+                if (!fastWritingMode) {
+                    toggleSetButtonColor(buttonDraw);
+                    toggleResetButtonColor(buttonErase);
+                }
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {
@@ -150,17 +170,67 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (drawType == 1) {
-                    detectDigit();
-                }
-                if (drawType == 2) {
-                    detectCapitalAlphabet();
-                }
-                if (drawType == 3) {
-                    detectSmallAlphabet();
-                }
+                detectObject();
             }
         });
+
+        buttonFastMode.setOnClickListener(e -> {
+            fastWritingMode ^= true;
+            if (fastWritingMode) {
+                signatureView.clearCanvas();
+                toggleSetButtonColor(buttonFastMode);
+                toggleSetButtonColor(buttonDraw);
+                buttonErase.setBackground(getResources().getDrawable(R.drawable.rect_circular_disabled));
+            }
+            else {
+                toggleResetButtonColor(buttonFastMode);
+                toggleResetButtonColor(buttonErase);
+            }
+        });
+
+        signatureView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (fastWritingMode && event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                    detectObject();
+                    signatureView.clearCanvas();
+                }
+                return false;
+            }
+        });
+    }
+
+    public void setButtonBackgroundColor(ImageButton button) {
+        button.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+    }
+    public void resetButtonBackgroundColor(ImageButton button) {
+        button.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+    }
+    public void setButtonForegroundColor(ImageButton button) {
+        button.setColorFilter(Color.rgb(78, 117, 193));
+    }
+    public void resetButtonForegroundColor(ImageButton button) {
+        button.setColorFilter(Color.rgb(255, 255, 255));
+    }
+    public void toggleSetButtonColor(ImageButton button) {
+        setButtonBackgroundColor((button));
+        setButtonForegroundColor(button);
+    }
+    public void toggleResetButtonColor(ImageButton button) {
+        resetButtonForegroundColor((button));
+        resetButtonBackgroundColor(button);
+    }
+
+    public void detectObject() {
+        if (drawType == 1) {
+            detectDigit();
+        }
+        if (drawType == 2) {
+            detectCapitalAlphabet();
+        }
+        if (drawType == 3) {
+            detectSmallAlphabet();
+        }
     }
 
     public void detectDigit() {
