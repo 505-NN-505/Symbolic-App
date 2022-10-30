@@ -2,6 +2,7 @@ package org.compilation.terror;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private EnglishDigitClassifier dClassifier;
     private EnglishAlphabetSmallClassifier sClassifier;
 
+    boolean fastWritingMode;
+    public ImageButton buttonFastMode;
+    public ImageButton buttonSuperscrpt;
+    public ImageButton buttonSubscript;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile = findViewById(R.id.compileButton);
 
         init();
+        fastWritingMode = false;
+        buttonFastMode = findViewById(R.id.fastMode);
+        buttonSuperscrpt = findViewById(R.id.superscriptButton);
+        buttonSubscript = findViewById(R.id.subscriptButton);
 
         buttonDigit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,17 +161,47 @@ public class MainActivity extends AppCompatActivity {
         buttonCompile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (drawType == 1) {
-                    detectDigit();
-                }
-                if (drawType == 2) {
-                    detectCapitalAlphabet();
-                }
-                if (drawType == 3) {
-                    detectSmallAlphabet();
-                }
+                detectObject();
             }
         });
+
+        buttonFastMode.setOnClickListener(e -> {
+            fastWritingMode ^= true;
+            if (fastWritingMode) {
+                buttonFastMode.setBackground(getResources().getDrawable(R.drawable.rect_circular_toggle));
+            }
+            else {
+                buttonFastMode.setBackground(getResources().getDrawable(R.drawable.rect_circular_button));
+            }
+        });
+
+        signatureView.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+
+                }
+                else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                    detectObject();
+                    signatureView.clearCanvas();
+                }
+                return true;
+            }
+        });
+
+    }
+
+    public void detectObject() {
+        if (drawType == 1) {
+            detectDigit();
+        }
+        if (drawType == 2) {
+            detectCapitalAlphabet();
+        }
+        if (drawType == 3) {
+            detectSmallAlphabet();
+        }
     }
 
     public void detectDigit() {
