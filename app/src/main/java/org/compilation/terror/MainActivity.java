@@ -9,6 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.SubscriptSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -46,7 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
     boolean fastWritingMode;
     public ImageButton buttonFastMode;
-    public ImageButton buttonSuperscrpt;
+
+    boolean superscriptMode, subscriptMode;
+    String superscriptDigitString = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+    String superscriptSmallerString = "ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᑫʳˢᵗᵘᵛʷˣʸᶻ";
+    String superscriptCapitalString = "ᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾQᴿˢᵀᵁⱽᵂˣʸᶻ";
+    String subscriptDigitString = "₀₁₂₃₄₅₆₇₈₉";
+    String subscriptSmallerString = "ₐ₆꜀ₔₑբ₉ₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥᵥᵥₓᵧ₂";
+    String subscriptCapitalString = "ₐ₈CDₑբGₕᵢⱼₖₗₘₙₒₚQᵣₛₜᵤᵥᵥᵥₓᵧZ";
+    public ImageButton buttonSuperscript;
     public ImageButton buttonSubscript;
 
     @Override
@@ -82,8 +94,11 @@ public class MainActivity extends AppCompatActivity {
         init();
         fastWritingMode = false;
         buttonFastMode = findViewById(R.id.fastMode);
-        buttonSuperscrpt = findViewById(R.id.superscriptButton);
+        buttonSuperscript = findViewById(R.id.superscriptButton);
         buttonSubscript = findViewById(R.id.subscriptButton);
+
+        superscriptMode = false;
+        subscriptMode = false;
 
         buttonDigit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +213,39 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        buttonSuperscript.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                superscriptMode ^= true;
+                if (superscriptMode) {
+                    toggleSetButtonColor(buttonSuperscript);
+                    toggleResetButtonColor(buttonSubscript);
+                }
+                else {
+                    toggleResetButtonColor(buttonSuperscript);
+                }
+                if (superscriptMode) {
+                    subscriptMode = false;
+                }
+            }
+        });
+        buttonSubscript.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subscriptMode ^= true;
+                if (subscriptMode) {
+                    toggleSetButtonColor(buttonSubscript);
+                    toggleResetButtonColor(buttonSuperscript);
+                }
+                else {
+                    toggleResetButtonColor(buttonSubscript);
+                }
+                if (subscriptMode) {
+                    superscriptMode = false;
+                }
+            }
+        });
     }
 
     public void setButtonBackgroundColor(ImageButton button) {
@@ -268,6 +316,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void placeText(char text) {
+        if (superscriptMode) {
+            if (drawType == 1) {
+                text = superscriptDigitString.charAt(text - '0');
+            }
+            else if (drawType == 2) {
+                text = superscriptCapitalString.charAt(text - 'A');
+            }
+            else if (drawType == 3) {
+                text = superscriptSmallerString.charAt(text - 'a');
+            }
+        }
+        if (subscriptMode) {
+            if (drawType == 1) {
+                text = subscriptDigitString.charAt(text - '0');
+            }
+            else if (drawType == 2) {
+                text = subscriptCapitalString.charAt(text - 'A');
+            }
+            else if (drawType == 3) {
+                text = subscriptSmallerString.charAt(text - 'a');
+            }
+        }
         String s = textEditor.getText().toString();
         s += text;
         textEditor.setText(s);
