@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         buttonDraw = findViewById(R.id.drawButton);
         buttonErase = findViewById(R.id.eraseButton);
         buttonClear = findViewById(R.id.clearButton);
+        
+        toggleSetButtonColor(buttonDraw);
 
         buttonCopy = findViewById(R.id.copyButton);
         buttonCut = findViewById(R.id.cutButton);
@@ -127,8 +129,12 @@ public class MainActivity extends AppCompatActivity {
         buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signatureView.setPenSize(50.f);
-                signatureView.setPenColor(Color.WHITE);
+                if (!fastWritingMode) {
+                    signatureView.setPenSize(50.f);
+                    signatureView.setPenColor(Color.WHITE);
+                    toggleSetButtonColor(buttonErase);
+                    toggleResetButtonColor(buttonDraw);
+                }
             }
         });
         buttonDraw.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 signatureView.setPenColor(Color.BLACK);
                 signatureView.setPenSize(initPenSize);
+                if (!fastWritingMode) {
+                    toggleSetButtonColor(buttonDraw);
+                    toggleResetButtonColor(buttonErase);
+                }
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {
@@ -167,10 +177,14 @@ public class MainActivity extends AppCompatActivity {
         buttonFastMode.setOnClickListener(e -> {
             fastWritingMode ^= true;
             if (fastWritingMode) {
+                signatureView.clearCanvas();
                 toggleSetButtonColor(buttonFastMode);
+                toggleSetButtonColor(buttonDraw);
+                buttonErase.setBackground(getResources().getDrawable(R.drawable.rect_circular_disabled));
             }
             else {
                 toggleResetButtonColor(buttonFastMode);
+                toggleResetButtonColor(buttonErase);
             }
         });
 

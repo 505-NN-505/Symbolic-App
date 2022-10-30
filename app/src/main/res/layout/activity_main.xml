@@ -46,8 +46,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/rect_circular_button"
-            android:tint="#FFFFFF"
-            app:srcCompat="@drawable/flash_thunder_icon" />
+            app:srcCompat="@drawable/flash_thunder_icon"
+            app:tint="#FFFFFF" />
 
         <ImageButton
             android:id="@+id/superscriptButton"
