@@ -1,299 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#CBCCD1"
-tools:context=".MainActivity"
-tools:ignore="MissingClass">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/platform"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CBCCD1"
+    tools:context=".MainActivity"
+    tools:ignore="MissingClass">
 
-<LinearLayout
-    android:id="@+id/artboardLayout"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:background="#4E75C3"
-    android:orientation="horizontal"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:id="@+id/artboardLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#4E75C3"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="1dp"
-        android:layout_weight="1"
-        android:text="Artboard"
-        android:textColor="#FFFFFF" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:text="Artboard"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
-<LinearLayout
-    android:id="@+id/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="40dp"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toTopOf="@+id/signature_view"
-    app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
-    app:layout_constraintStart_toEndOf="@+id/linearLayout"
-    app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
-    app:layout_constraintVertical_bias="0.387">
-
-    <ImageButton
-        android:id="@+id/fastMode"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/rect_circular_button"
-        app:srcCompat="@drawable/flash_thunder_icon"
-        app:tint="#FFFFFF" />
-
-    <ImageButton
-        android:id="@+id/superscriptButton"
-        android:layout_width="38dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/rect_circular_button"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/superscript_icon" />
-
-    <ImageButton
-        android:id="@+id/subscriptButton"
-        android:layout_width="38dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/rect_circular_button"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/subscript_icon" />
-
-</LinearLayout>
-
-<LinearLayout
-    android:id="@+id/linearLayout"
-    android:layout_width="40dp"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="1dp"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
-
-    <ImageButton
-        android:id="@+id/digitButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/rect_circular_button"
-        app:srcCompat="@drawable/number_one_icon"
-        app:tint="#FFFFFF" />
-
-    <ImageButton
-        android:id="@+id/capitalButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/rect_circular_button"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/a_alphabet_icon" />
-
-    <ImageButton
-        android:id="@+id/smallerButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/rect_circular_button"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/smaller_a_icon" />
-
-    <ImageButton
-        android:id="@+id/symbolButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/rect_circular_button"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/sigma_sum_icon" />
-
-</LinearLayout>
-
-<LinearLayout
-    android:id="@+id/canvasToolsLayout"
-    android:layout_width="40dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="110dp"
-    android:layout_marginRight="1dp"
-    android:layout_marginBottom="89dp"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
-
-    <ImageButton
-        android:id="@+id/drawButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/rect_circular_button"
-        android:contentDescription="draw"
-        app:srcCompat="@drawable/pencil_icon"
-        app:tint="#FFFFFF" />
-
-    <ImageButton
-        android:id="@+id/eraseButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/rect_circular_button"
-        android:contentDescription="erase"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/eraser_icon" />
-
-    <ImageButton
-        android:id="@+id/clearButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/rect_circular_button"
-        android:contentDescription="clear"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/delete_icon" />
-
-</LinearLayout>
-
-<com.kyanogen.signatureview.SignatureView
-    android:id="@+id/signature_view"
-    android:layout_width="83dp"
-    android:layout_height="101dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginBottom="5dp"
-    app:backgroundColor="#ffffff"
-    app:enableSignature="true"
-    app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
-    app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
-    app:layout_constraintStart_toEndOf="@+id/linearLayout"
-    app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
-    app:penColor="#000000"
-    app:penSize="5dp" />
-
-<LinearLayout
-    android:id="@+id/textEditorLayout"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:background="#4E75C2"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
-
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
+        android:id="@+id/tools"
         android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/signature_view"
+        app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
+        app:layout_constraintVertical_bias="0.387">
+
+        <ImageButton
+            android:id="@+id/fastMode"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rect_circular_button"
+            app:srcCompat="@drawable/flash_thunder_icon"
+            app:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/superscriptButton"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/superscript_icon" />
+
+        <ImageButton
+            android:id="@+id/subscriptButton"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/subscript_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="1"
-        android:text="Text Editor"
-        android:textColor="#FFFFFF" />
+        android:layout_marginLeft="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/digitButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            app:srcCompat="@drawable/number_one_icon"
+            app:tint="#FFFFFF" />
 
-<EditText
-    android:id="@+id/textEditor"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginBottom="15dp"
-    android:background="@drawable/rect_circular_interface"
-    android:ems="10"
-    android:gravity="start|top"
-    android:inputType="textMultiLine"
-    android:textSize="24sp"
-    app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
-    app:layout_constraintEnd_toStartOf="@+id/textEditorToolsLayout"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/compileButton" />
+        <ImageButton
+            android:id="@+id/capitalButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/a_alphabet_icon" />
 
-<LinearLayout
-    android:id="@+id/textEditorToolsLayout"
-    android:layout_width="40dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="80dp"
-    android:layout_marginRight="1dp"
-    android:layout_marginBottom="96dp"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textEditorLayout">
+        <ImageButton
+            android:id="@+id/smallerButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/smaller_a_icon" />
+
+        <ImageButton
+            android:id="@+id/symbolButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/rect_circular_button"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/sigma_sum_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/canvasToolsLayout"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="89dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
+
+        <ImageButton
+            android:id="@+id/drawButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rect_circular_button"
+            android:contentDescription="draw"
+            app:srcCompat="@drawable/pencil_icon"
+            app:tint="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/eraseButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rect_circular_button"
+            android:contentDescription="erase"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/eraser_icon" />
+
+        <ImageButton
+            android:id="@+id/clearButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rect_circular_button"
+            android:contentDescription="clear"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/delete_icon" />
+
+    </LinearLayout>
+
+    <com.kyanogen.signatureview.SignatureView
+        android:id="@+id/signature_view"
+        android:layout_width="83dp"
+        android:layout_height="101dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:backgroundColor="#ffffff"
+        app:enableSignature="true"
+        app:layout_constraintBottom_toTopOf="@+id/textEditorLayout"
+        app:layout_constraintEnd_toStartOf="@+id/canvasToolsLayout"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout"
+        app:penColor="#000000"
+        app:penSize="5dp" />
+
+    <LinearLayout
+        android:id="@+id/textEditorLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#4E75C2"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artboardLayout">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="Text Editor"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/textEditor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rect_circular_interface"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
+        app:layout_constraintEnd_toStartOf="@+id/textEditorToolsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/compileButton" />
+
+    <LinearLayout
+        android:id="@+id/textEditorToolsLayout"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="96dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/symbolicLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEditorLayout">
+
+        <ImageButton
+            android:id="@+id/copyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_circular_button"
+            android:contentDescription="copy"
+            android:minHeight="48dp"
+            android:tint="#FFFFFF"
+            app:srcCompat="?attr/actionModeCopyDrawable" />
+
+        <ImageButton
+            android:id="@+id/cutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_circular_button"
+            android:contentDescription="cut"
+            android:minHeight="48dp"
+            android:tint="#FFFFFF"
+            app:srcCompat="?attr/actionModeCutDrawable" />
+
+        <ImageButton
+            android:id="@+id/clearTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rect_circular_button"
+            android:contentDescription="clear"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/backspace_icon" />
+
+    </LinearLayout>
 
     <ImageButton
-        android:id="@+id/copyButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_circular_button"
-        android:contentDescription="copy"
-        android:minHeight="48dp"
-        android:tint="#FFFFFF"
-        app:srcCompat="?attr/actionModeCopyDrawable" />
-
-    <ImageButton
-        android:id="@+id/cutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_circular_button"
-        android:contentDescription="cut"
-        android:minHeight="48dp"
-        android:tint="#FFFFFF"
-        app:srcCompat="?attr/actionModeCutDrawable" />
-
-    <ImageButton
-        android:id="@+id/clearTextButton"
-        android:layout_width="match_parent"
+        android:id="@+id/compileButton"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/rect_circular_button"
-        android:contentDescription="clear"
+        android:background="@drawable/circular_image_button"
+        android:padding="10dp"
         android:tint="#FFFFFF"
-        app:srcCompat="@drawable/backspace_icon" />
+        app:layout_constraintBottom_toTopOf="@+id/textEditorToolsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/canvasToolsLayout"
+        app:srcCompat="@drawable/customizable_icon" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/symbolicLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#4E75C1"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-<ImageButton
-    android:id="@+id/compileButton"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="@drawable/circular_image_button"
-    android:padding="10dp"
-    android:tint="#FFFFFF"
-    app:layout_constraintBottom_toTopOf="@+id/textEditorToolsLayout"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/canvasToolsLayout"
-    app:srcCompat="@drawable/customizable_icon" />
+        <Button
+            android:id="@+id/buttonSymbolic"
+            android:layout_width="98dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="SYMBOLIC"
+            android:textAlignment="textStart"
+            android:textSize="12sp"
+            app:backgroundTint="#4E75C0" />
 
-<LinearLayout
-    android:id="@+id/symbolicLayout"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:background="#4E75C1"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+        <Button
+            android:id="@+id/buttonManual"
+            android:layout_width="98dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="manual"
+            android:textAlignment="textEnd"
+            android:textSize="12sp"
+            app:backgroundTint="#4E75C0" />
 
-    <Button
-        android:id="@+id/buttonSymbolic"
-        android:layout_width="98dp"
-        android:layout_height="35dp"
-        android:layout_weight="1"
-        android:text="SYMBOLIC"
-        android:textAlignment="textStart"
-        android:textSize="12sp"
-        app:backgroundTint="#4E75C0" />
-
-    <Button
-        android:id="@+id/buttonManual"
-        android:layout_width="98dp"
-        android:layout_height="35dp"
-        android:layout_weight="1"
-        android:text="manual"
-        android:textAlignment="textEnd"
-        android:textSize="12sp"
-        app:backgroundTint="#4E75C0" />
-
-</LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@
 package org.compilation.terror;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -23,7 +24,10 @@ import android.widget.Toast;
 import com.kyanogen.signatureview.SignatureView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class SymbolicActivity extends AppCompatActivity {
     int drawType = 1;
@@ -50,6 +54,7 @@ public class SymbolicActivity extends AppCompatActivity {
     private EnglishAlphabetClassifier cClassifier;
     private EnglishDigitClassifier dClassifier;
     private EnglishAlphabetSmallClassifier sClassifier;
+    private SymbolClassifier symClassifier;
 
     boolean fastWritingMode;
     public ImageButton buttonFastMode;
@@ -71,6 +76,9 @@ public class SymbolicActivity extends AppCompatActivity {
 
     HashMap<Character, Character> supToNorm = new HashMap<>();
     HashMap<Character, Character> subToNorm = new HashMap<>();
+
+    ConstraintLayout backGround;
+    int track;
 
     public void populateSupSubConversion() {
         Character d = '0';
@@ -153,6 +161,17 @@ public class SymbolicActivity extends AppCompatActivity {
         buttonSymbolic.setBackgroundColor(Color.WHITE);
         buttonSymbolic.setTextColor(Color.rgb(78, 117, 193));
 
+        backGround = findViewById(R.id.platform);
+        track = 0;
+
+        backGround.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawType == 4) {
+                    track++;
+                }
+            }
+        });
         buttonDigit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -394,8 +413,21 @@ public class SymbolicActivity extends AppCompatActivity {
         placeText(letter);
     }
 
+    ArrayList<Character> syms = new ArrayList<>(Arrays.asList('2', 'X', '3', '5', '1', '0', '7', '/', '-', '8', '+', '4', '6', '9'));
+    ArrayList<Character> bck = new ArrayList<>(Arrays.asList('∫', '√', '+', 'X'));
     public void detectSymbols() {
-
+        if (track == 0) {
+            Bitmap bitmap = signatureView.getSignatureBitmap();
+            bitmapSymbol = getResizedBitmap(bitmap, 32, 32);
+            SymbolResult resultSym = symClassifier.classify(bitmapSymbol);
+            System.out.println(resultSym.getNumber());
+            char sym = syms.get(resultSym.getNumber());
+            placeText(sym);
+        }
+        else {
+            placeText(bck.get(track - 1));
+        }
+        track = 0;
     }
 
     public void clearTextEditor() {
@@ -495,6 +527,7 @@ public class SymbolicActivity extends AppCompatActivity {
             cClassifier = new EnglishAlphabetClassifier(this);
             sClassifier = new EnglishAlphabetSmallClassifier(this);
             dClassifier = new EnglishDigitClassifier(this);
+            symClassifier = new SymbolClassifier(this);
         } catch (IOException e) {
 
         }
