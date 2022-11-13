@@ -76,6 +76,8 @@ public class SymbolicActivity extends AppCompatActivity {
 
     HashMap<Character, Character> supToNorm = new HashMap<>();
     HashMap<Character, Character> subToNorm = new HashMap<>();
+    HashMap<Character, Character> NormToSup = new HashMap<>();
+    HashMap<Character, Character> NormToSub = new HashMap<>();
 
     ConstraintLayout backGround;
     int track;
@@ -84,30 +86,47 @@ public class SymbolicActivity extends AppCompatActivity {
         Character d = '0';
         for (int i = 0; i < superscriptDigitString.length(); i++) {
             Character ch = superscriptDigitString.charAt(i);
-            supToNorm.put(ch, d++);
+            supToNorm.put(ch, d);
+            NormToSup.put(d, ch);
+            d++;
         }
         d = 'a';
         for (int i = 0; i < superscriptSmallerString.length(); i++) {
             Character ch = superscriptSmallerString.charAt(i);
-            supToNorm.put(ch, d++);
+            supToNorm.put(ch, d);
+            NormToSup.put(d, ch);
+            d++;
         }
         d = 'A';
         for (int i = 0; i < superscriptCapitalString.length(); i++) {
             Character ch = superscriptCapitalString.charAt(i);
-            supToNorm.put(ch, d++);
+            supToNorm.put(ch, d);
+            NormToSup.put(d, ch);
+            d++;
         }
+
+        supToNorm.put('⁺', '+');
+        supToNorm.put('⁻', '-');
+
+        NormToSup.put('+', '⁺');
+        NormToSup.put('-', '⁻');
+
         d = '0';
         for (int i = 0; i < subscriptDigitString.length(); i++) {
             Character ch = subscriptDigitString.charAt(i);
-            subToNorm.put(ch, d++);
+            subToNorm.put(ch, d);
+            NormToSub.put(d, ch);
+            d++;
         }
         for (int i = 0; i < subscriptSmallerLay.length(); i++) {
             Character ch = subscriptSmallerString.charAt(i);
             subToNorm.put(ch, subscriptSmallerLay.charAt(i));
+            NormToSub.put(subscriptSmallerLay.charAt(i), ch);
         }
         for (int i = 0; i < subscriptCapitalLay.length(); i++) {
             Character ch = subscriptCapitalString.charAt(i);
             subToNorm.put(ch, subscriptCapitalLay.charAt(i));
+            NormToSub.put(subscriptCapitalLay.charAt(i), ch);
         }
     }
 
@@ -168,7 +187,7 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (drawType == 4) {
-                    track++;
+                    if (track < 5) track++;
                 }
             }
         });
@@ -176,6 +195,7 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawType = 1;
+                track = 0;
                 toggleSetButtonColor(buttonDigit);
                 toggleResetButtonColor(buttonCapital);
                 toggleResetButtonColor(buttonSmaller);
@@ -186,6 +206,7 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawType = 2;
+                track = 0;
                 toggleSetButtonColor(buttonCapital);
                 toggleResetButtonColor(buttonDigit);
                 toggleResetButtonColor(buttonSmaller);
@@ -196,6 +217,7 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawType = 3;
+                track = 0;
                 toggleSetButtonColor(buttonSmaller);
                 toggleResetButtonColor(buttonDigit);
                 toggleResetButtonColor(buttonCapital);
@@ -206,6 +228,7 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawType = 4;
+                track = 0;
                 toggleSetButtonColor(buttonSymbol);
                 toggleResetButtonColor(buttonDigit);
                 toggleResetButtonColor(buttonCapital);
@@ -260,7 +283,7 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (signatureView.isBitmapEmpty()) {
-                    Toast.makeText(getApplicationContext(), "The artboard is empty!", Toast.LENGTH_SHORT).show();
+                    placeText(' ');
                 }
                 else {
                     detectObject();
@@ -289,7 +312,6 @@ public class SymbolicActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (fastWritingMode && event.getAction() == android.view.MotionEvent.ACTION_UP) {
                     detectObject();
-                    signatureView.clearCanvas();
                 }
                 return false;
             }
@@ -389,6 +411,7 @@ public class SymbolicActivity extends AppCompatActivity {
         if (drawType == 4) {
             detectSymbols();
         }
+        signatureView.clearCanvas();
     }
 
     public void detectDigit() {
@@ -414,7 +437,7 @@ public class SymbolicActivity extends AppCompatActivity {
     }
 
     ArrayList<Character> syms = new ArrayList<>(Arrays.asList('2', 'X', '3', '5', '1', '0', '7', '/', '-', '8', '+', '4', '6', '9'));
-    ArrayList<Character> bck = new ArrayList<>(Arrays.asList('∫', '√', '+', 'X'));
+    ArrayList<Character> bck = new ArrayList<>(Arrays.asList('∫', '√', '+', '=', 'π'));
     public void detectSymbols() {
         if (track == 0) {
             Bitmap bitmap = signatureView.getSignatureBitmap();
@@ -435,27 +458,11 @@ public class SymbolicActivity extends AppCompatActivity {
     }
 
     public void placeText(char text) {
-        if (superscriptMode) {
-            if (drawType == 1) {
-                text = superscriptDigitString.charAt(text - '0');
-            }
-            else if (drawType == 2) {
-                text = superscriptCapitalString.charAt(text - 'A');
-            }
-            else if (drawType == 3) {
-                text = superscriptSmallerString.charAt(text - 'a');
-            }
+        if (text != ' ' && superscriptMode) {
+            text = NormToSup.get(text);
         }
-        if (subscriptMode) {
-            if (drawType == 1) {
-                text = subscriptDigitString.charAt(text - '0');
-            }
-            else if (drawType == 2) {
-                text = subscriptCapitalString.charAt(text - 'A');
-            }
-            else if (drawType == 3) {
-                text = subscriptSmallerString.charAt(text - 'a');
-            }
+        if (text != ' ' && subscriptMode) {
+            text = NormToSub.get(text);
         }
         String s = textEditor.getText().toString();
         s += text;
@@ -474,35 +481,32 @@ public class SymbolicActivity extends AppCompatActivity {
         for (Integer i = startSelection; i < endSelection; i++) {
             char ch = text.charAt(i);
             char tar = '#';
-            if (Character.isUpperCase(ch)) {
-                if (mode == 1) tar = superscriptCapitalString.charAt(ch - 'A');
-                else tar = subscriptCapitalString.charAt(ch - 'A');
-                mapCharModes.put(i, mode);
+            if (ch == ' ') {
+                tar = ' ';
                 text = text.substring(0, i) + tar + text.substring(i + 1);
+                continue;
             }
-            else if (Character.isLowerCase(ch)) {
-                if (mode == 1) tar = superscriptSmallerString.charAt(ch - 'a');
-                else tar = subscriptSmallerString.charAt(ch - 'a');
-                mapCharModes.put(i, mode);
-                text = text.substring(0, i) + tar + text.substring(i + 1);
-            }
-            else if (Character.isDigit(ch)) {
-                if (mode == 1) tar = superscriptDigitString.charAt(ch - '0');
-                else tar = subscriptDigitString.charAt(ch - '0');
-                mapCharModes.put(i, mode);
-                text = text.substring(0, i) + tar + text.substring(i + 1);
-            }
-            else if (mapCharModes.containsKey(i) && mapCharModes.get(i) == 1) {
-                if (mode == 1) {
+            if (mapCharModes.containsKey(i)) {
+                if (mapCharModes.get(i) == 1 && mode == 1) {
                     tar = supToNorm.get(ch);
                     mapCharModes.remove(i);
                     text = text.substring(0, i) + tar + text.substring(i + 1);
                 }
-            }
-            else if (mapCharModes.containsKey(i) && mapCharModes.get(i) == 2) {
-                if (mode == 2) {
-                    subToNorm.get(ch);
+                else if (mapCharModes.get(i) == 2 && mode == 2) {
+                    tar = subToNorm.get(ch);
                     mapCharModes.remove(i);
+                    text = text.substring(0, i) + tar + text.substring(i + 1);
+                }
+            }
+            else {
+                if (mode == 1) {
+                    tar = NormToSup.get(ch);
+                    mapCharModes.put(i, mode);
+                    text = text.substring(0, i) + tar + text.substring(i + 1);
+                }
+                else {
+                    tar = NormToSub.get(ch);
+                    mapCharModes.put(i, mode);
                     text = text.substring(0, i) + tar + text.substring(i + 1);
                 }
             }
