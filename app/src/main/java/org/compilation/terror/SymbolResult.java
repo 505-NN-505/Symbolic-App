@@ -25,6 +25,7 @@ public class SymbolResult {
                 maxIdx = i;
             }
         }
+        System.out.println(maxIdx);
         return maxIdx;
     }
 }

@@ -15,17 +15,19 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
 
+//{0: 'theta', 1: 'forall', 2: 'sqrt', 3: 'int', 4: 'lambda', 5: 'pi', 6: 'in', 7: 'infty', 8: 'sum', 9: 'exists'}
+
 public class SymbolClassifier {
     private static final String LOG_TAG = SymbolClassifier.class.getSimpleName();
 
-    private static final String MODEL_NAME = "tf_lite_symbol_lite_model.tflite";
+    private static final String MODEL_NAME = "tf_lite_symbols_model_pro.tflite";
 
     private static final int BATCH_SIZE = 1;
-    public static final int IMG_HEIGHT = 32;
-    public static final int IMG_WIDTH = 32;
+    public static final int IMG_HEIGHT = 28;
+    public static final int IMG_WIDTH = 28;
     private static final int NUM_CHANNEL = 1;
-    private static final int NUM_CLASSES = 14;
-    public static float total =0;
+    private static final int NUM_CLASSES = 10;
+    public static float total = 0;
 
     private final Interpreter.Options options = new Interpreter.Options();
     private final Interpreter mInterpreter;

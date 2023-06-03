@@ -180,22 +180,10 @@ public class SymbolicActivity extends AppCompatActivity {
         buttonSymbolic.setBackgroundColor(Color.WHITE);
         buttonSymbolic.setTextColor(Color.rgb(78, 117, 193));
 
-        backGround = findViewById(R.id.platform);
-        track = 0;
-
-        backGround.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawType == 4) {
-                    if (track < 5) track++;
-                }
-            }
-        });
         buttonDigit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawType = 1;
-                track = 0;
                 toggleSetButtonColor(buttonDigit);
                 toggleResetButtonColor(buttonCapital);
                 toggleResetButtonColor(buttonSmaller);
@@ -228,7 +216,6 @@ public class SymbolicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawType = 4;
-                track = 0;
                 toggleSetButtonColor(buttonSymbol);
                 toggleResetButtonColor(buttonDigit);
                 toggleResetButtonColor(buttonCapital);
@@ -436,21 +423,13 @@ public class SymbolicActivity extends AppCompatActivity {
         placeText(letter);
     }
 
-    ArrayList<Character> syms = new ArrayList<>(Arrays.asList('2', 'X', '3', '5', '1', '0', '7', '/', '-', '8', '+', '4', '6', '9'));
-    ArrayList<Character> bck = new ArrayList<>(Arrays.asList('∫', '√', '+', '=', 'π'));
+    ArrayList<Character> bck = new ArrayList<>(Arrays.asList('θ', '∀', '√', '∫', 'λ', 'π', '∈', '∞', 'Σ', '∃'));
     public void detectSymbols() {
-        if (track == 0) {
-            Bitmap bitmap = signatureView.getSignatureBitmap();
-            bitmapSymbol = getResizedBitmap(bitmap, 32, 32);
-            SymbolResult resultSym = symClassifier.classify(bitmapSymbol);
-            System.out.println(resultSym.getNumber());
-            char sym = syms.get(resultSym.getNumber());
-            placeText(sym);
-        }
-        else {
-            placeText(bck.get(track - 1));
-        }
-        track = 0;
+        Bitmap bitmap = signatureView.getSignatureBitmap();
+        bitmapSymbol = getResizedBitmap(bitmap, 28, 28);
+        SymbolResult resultSym = symClassifier.classify(bitmapSymbol);
+        char sym = bck.get(resultSym.getNumber());
+        placeText(sym);
     }
 
     public void clearTextEditor() {
